@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Get Statistics Plugin
-  description: A plugin that allows the user to get a list of news related to a specific topic. This topic will be chosen by the user. The user will be able to select a title and all the information corresponding to that news will be returned.
+  description: A plugin that allows the user to get a list of news related to a specific topic. This topic will be chosen by the user. The user will be able to select a title and all the information corresponding to that news will be returned. User will be able to supply an url of an article in order to get information.
   version: 'v1'
 servers:
   - url: http://localhost:8080
@@ -36,6 +36,21 @@ paths:
         "200":
           description: OK
 
+  /get_url_information:
+    post:
+      operationId: getUrlInformation
+      summary: Supply url of an article in order to get information.
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getURLINFORMATION'
+      responses:
+        "200":
+          description: OK
+
 
 
 components:
@@ -56,4 +71,13 @@ components:
         title:
           type: string
           description: title selected.
+          required: true
+
+    getURLINFORMATION:
+      title: Url
+      type: object
+      properties:
+        title:
+          type: string
+          description: article url.
           required: true

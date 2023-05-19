@@ -54,12 +54,29 @@ def obtain_full_content(url):
     article.download()
     article.parse()
 
-    # object_ = {
-    #     'Contenido': article.text
-    # }
-    # print(object_)
-
     return article.text
+
+
+
+def obtain_information_of_url(url):
+    
+    # Crear un objeto de artículo con la URL proporcionada
+    article = Article(url)
+    
+    # Descargar y analizar el artículo
+    article.download()
+    article.parse()
+
+    article_json = {
+        "Article's Author" : article.authors,
+        "Article Publication Date" : article.publish_date,
+        "Article's Title" : article.title,
+        "Article's Text" : article.text
+    }
+
+    return article_json
+
+
 
 def add_url_content_to_json(title):
     json_without_full_content = get_info_new(title)

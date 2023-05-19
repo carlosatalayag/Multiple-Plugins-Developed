@@ -28,6 +28,16 @@ def get_new_information():
     output = jsonify(new_information)
     return output, 200
 
+@app.route('/get_url_information', methods=['POST'])
+def get_url_information():
+    data = request.json
+    url = data['title']
+
+    url_information = newsapi_conection.obtain_information_of_url(url)
+
+    output = jsonify(url_information)
+    return output, 200    
+
 @app.get("/logo.png")
 def plugin_logo():
     filename = 'logo.png'
