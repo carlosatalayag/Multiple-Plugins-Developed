@@ -1,0 +1,77 @@
+openapi: 3.0.1
+info:
+  title: Get Statistics Plugin
+  description: A plugin that allows the user to get local csvs list and select one of them for getting general information. We can also select a column of the csv selected for getting more information.
+  version: 'v1'
+servers:
+  - url: http://localhost:5003
+paths:
+
+  /get_image:
+    get:
+      operationId: getImage
+      summary: Get an image 
+      responses:
+        "200":
+          description: OK
+          content:
+              image/png:
+                  schema:
+                      type: string
+                      contentMediaType: image/png
+                      contentEncoding: base64
+
+  /get_csvs:
+    get:
+      operationId: getCSVs
+      summary: Get a list of csvs
+
+  /select_csv:
+    post:
+      operationId: selectCsv
+      summary: Select one csv listed, then obtain several general infromation.
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/selectCSV'
+      responses:
+        "200":
+          description: OK
+  /select_column:
+    post:
+      operationId: selectColumn
+      summary: Select column of a csv selected for getting more information.
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/selectCOLUMN'
+      responses:
+        "200":
+          description: OK
+
+
+components:
+  schemas:
+    selectCSV:
+      title: filename
+      type: object
+      properties:
+        csv:
+          type: string
+          description: CSV selected.
+          required: true
+        
+    selectCOLUMN:
+      title: column name
+      type: object
+      properties:
+        column:
+          type: string
+          description: column selected.
+          required: true

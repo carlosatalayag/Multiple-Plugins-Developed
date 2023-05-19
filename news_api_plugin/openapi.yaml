@@ -1,0 +1,59 @@
+openapi: 3.0.1
+info:
+  title: Get Statistics Plugin
+  description: A plugin that allows the user to get a list of news related to a specific topic. This topic will be chosen by the user. The user will be able to select a title and all the information corresponding to that news will be returned.
+  version: 'v1'
+servers:
+  - url: http://localhost:8080
+paths:
+
+  /select_topic:
+    post:
+      operationId: selectTopic
+      summary: Get a list of titles news related to the topic.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/selectTOPIC'
+      responses:
+        "200":
+          description: OK
+
+  /select_title:
+    post:
+      operationId: selectTitle
+      summary: Select one title listed, then obtain several general infromation of the new.
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/selectTITLE'
+      responses:
+        "200":
+          description: OK
+
+
+
+components:
+  schemas:
+    selectTOPIC:
+      title: topic name
+      type: object
+      properties:
+        topic:
+          type: string
+          description: topic choosen.
+          required: true
+        
+    selectTITLE:
+      title: Title name
+      type: object
+      properties:
+        title:
+          type: string
+          description: title selected.
+          required: true
