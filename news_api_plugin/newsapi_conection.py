@@ -1,9 +1,11 @@
-import os
 from newsapi import NewsApiClient
 from newspaper import Article
 import json
-import pprint
+import urllib.request
+import PyPDF2
+import io
 import requests
+from tika import parser
 
 url = 'https://newsapi.org/v2/everything?'
 
@@ -18,7 +20,7 @@ def get_json_tittles(topic):
 
     parameters = {
         'q': topic, # query phrase
-        'pageSize': 10,  # maximum is 100
+        'pageSize': 20,  # maximum is 100
         'apiKey': newsapi_key # your own API key
     }
 
@@ -96,3 +98,22 @@ def add_url_content_to_json(title):
 
     return json_data_actualizado
 
+
+# Function for upload url document
+def get_url_doc_info(url):
+
+    req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
+    remote_file = urllib.request.urlopen(req).read()
+    remote_file_bytes = io.BytesIO(remote_file)
+    pdfdoc_remote = PyPDF2.PdfFileReader(remote_file_bytes)
+
+    text = ''
+
+    for i in range(pdfdoc_remote.numPages):
+        current_page = pdfdoc_remote.getPage(i)  
+
+        text += "Content on page:" + str(i + 1) + "\n"
+
+        text += current_page.extractText()
+
+    return text

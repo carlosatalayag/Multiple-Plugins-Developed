@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Get Statistics Plugin
-  description: A plugin that allows the user to get a list of news related to a specific topic. This topic will be chosen by the user. The user will be able to select a title and all the information corresponding to that news will be returned. User will be able to supply an url of an article in order to get information.
+  description: A plugin that allows the user to get a list of news related to a specific topic. This topic will be chosen by the user. The user will be able to select a title and all the information corresponding to that news will be returned. User will be able to supply an url of an article or pdf in order to get information.
   version: 'v1'
 servers:
   - url: http://localhost:8080
@@ -51,6 +51,21 @@ paths:
         "200":
           description: OK
 
+  /get_pdf_information:
+    post:
+      operationId: getPDFInformation
+      summary: Supply url of a pdf in order to get information.
+      
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getPDFINFORMATION'
+      responses:
+        "200":
+          description: OK
+
 
 
 components:
@@ -80,4 +95,13 @@ components:
         title:
           type: string
           description: article url.
+          required: true
+
+    getPDFINFORMATION:
+      title: Url
+      type: object
+      properties:
+        title:
+          type: string
+          description: pdf url.
           required: true
