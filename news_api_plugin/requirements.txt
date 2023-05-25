@@ -1,0 +1,4 @@
+Flask
+newsapi-python
+newspaper
+PyPDF2==2.12.1
